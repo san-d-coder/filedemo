@@ -80,8 +80,13 @@ public class FileOperations {
 		if(fileName == null) 
 			System.out.println("No files selected");
 		else {
-			if(file.delete())
+			if(file.delete()) {
 				System.out.println("File "+fileName+".txt deleted successfully");
+				file = null;
+				fileName = null;
+				fileWriter = null;
+				message = null; 
+			}
 			else
 				System.out.println("Cannot delete this file: "+fileName+".txt");
 		}
