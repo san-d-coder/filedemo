@@ -1,10 +1,9 @@
 package com.sandcoder.filedemo;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+
+import com.sandcoder.filedemo.operations.FileOperations;
 
 /**
  * Hello world!
@@ -12,15 +11,12 @@ import java.util.Scanner;
  */
 public class App {
 
+	private static FileOperations fileOperations = null;
 	private static Scanner scanner = null;
-	private static String fileName = null;
-	private static String message = null;
-	private static File file = null;
-	private static FileWriter fileWriter = null;
 	private static int userInput = 0;
 
 	public static void main(String[] args) throws IOException {
-
+		fileOperations = new FileOperations();
 		while (true) {
 			showPrompt();
 
@@ -30,15 +26,19 @@ public class App {
 
 			switch (userInput) {
 			case 1:
-				createFile();
+				fileOperations.selectFile();
 				break;
 			case 2:
-				writeToFile();
+				fileOperations.writeToFile();
 				break;
 			case 3:
-				readFromFile();
+				fileOperations.readFromFile();
 				break;
 			case 4:
+				fileOperations.deleteFile();
+				break;
+			case 5:
+				System.out.println("Thanks for using FileDemo");
 				System.exit(0);
 			default:
 				System.out.println("Incorrect Input");
@@ -48,66 +48,14 @@ public class App {
 
 	}
 
-	public static void createFile() {
-
-		System.out.println("Enter the file name: ");
-		fileName = scanner.next();
-
-		file = new File(fileName + ".txt");
-
-		try {
-			if (file.createNewFile())
-				System.out.println("File " + fileName + ".txt created and selected successfully");
-			else
-				System.out.println("File " + fileName + ".txt already exists and selected.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void writeToFile() {
-		
-		if(fileName==null)
-			System.out.println("No files selected.");
-		else {
-			System.out.println("Enter the message: ");
-			message = scanner.next();
-			
-			try {
-				fileWriter = new FileWriter(file);
-				fileWriter.write(message);
-				fileWriter.close();
-				System.out.println("Message added: "+ message);
-			} catch (IOException e) {
-				System.out.println("An error occurred!");
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-	public static void readFromFile() {
-		if(fileName == null)
-			System.out.println("No files selected.");
-		else {
-			try {
-				scanner = new Scanner(file);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			if(!scanner.hasNext())
-				System.out.println("File empty, add a message first!");
-			while(scanner.hasNext())
-				System.out.println(scanner.next());
-		}
-
-	}
+	
 
 	public static void showPrompt() {
 		System.out.println("Select an option from below:");
-		System.out.println("1. Create new file");
+		System.out.println("1. Select file");
 		System.out.println("2. Write to file");
 		System.out.println("3. Read from file");
+		System.out.println("4: Delete file");
+		System.out.println("5: Exit");
 	}
 }
