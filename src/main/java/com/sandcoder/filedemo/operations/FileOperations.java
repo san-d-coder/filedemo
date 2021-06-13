@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class FileOperations {
 	
 	private static Scanner scanner = null;

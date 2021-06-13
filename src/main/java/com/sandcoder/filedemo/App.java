@@ -3,6 +3,9 @@ package com.sandcoder.filedemo;
 import java.io.IOException;
 import java.util.Scanner;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import com.sandcoder.filedemo.operations.FileOperations;
 
 /**
@@ -14,9 +17,13 @@ public class App {
 	private static FileOperations fileOperations = null;
 	private static Scanner scanner = null;
 	private static int userInput = 0;
+	private static ApplicationContext appContext = null;
 
 	public static void main(String[] args) throws IOException {
-		fileOperations = new FileOperations();
+		
+		 appContext = new AnnotationConfigApplicationContext(AppConfig.class);
+		 fileOperations = appContext.getBean(FileOperations.class);
+		 
 		while (true) {
 			showPrompt();
 
